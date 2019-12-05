@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "/home/dragosc/Workspace/github.com/glasswingjs/config"
+		},
+		{
+			"path": "/home/dragosc/Workspace/github.com/glasswingjs/http"
+		},
+		{
+			"path": "/home/dragosc/Workspace/github.com/glasswingjs/router"
+		},
+		{
+			"path": "/home/dragosc/Workspace/github.com/glasswingjs/common"
+		}
+	],
+	"settings": {}
+}
