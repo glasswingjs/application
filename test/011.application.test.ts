@@ -1,92 +1,89 @@
-// import 'reflect-metadata'
-// import {expect} from 'chai'
-// // import fetch from 'node-fetch'
-// import {container} from 'tsyringe'
+import 'reflect-metadata'
 
-// import {Application, registerHttpServerFactory, registerRouter, RouteRegistry, TestController} from '../src'
+import {registerRouter, RouteRegistry} from '@glasswing/router'
+import {expect} from 'chai'
+// import fetch from 'node-fetch'
+import {container} from 'tsyringe'
 
-// registerRouter()
-// registerHttpServerFactory()
+import {Application, registerHttpServerFactory} from '../src'
+import {TestController} from './controller'
 
-// describe('lib/application => Application', () => {
-//   let application: Application
+registerRouter()
+registerHttpServerFactory()
+
+describe('lib/application => Application', () => {
+  let application: Application
+
+  before(() => {
+    application = container.resolve(Application)
+    application.registerControllers([container.resolve(TestController)])
+  })
+
+  it('Application::constructor() will return an object', () => {
+    expect(application).to.be.an('object')
+  })
+
+/*  it('Application::inject() will return an object', () => {
+    const injectedApplication = container.resolve(Application)
+    expect(injectedApplication).to.be.an('object')
+  })
+
+  it('Application::registeredRoutes() will return an array', () => {
+    expect(application.registeredRoutes()).to.be.an('array')
+    expect(application.registeredRoutes().length).to.equal(
+      Reflect.getMetadata('routeRegistry', new TestController()).routes.length,
+    )
+  })
+
+  it('Application::start()/stop() will start, then stop the server', done => {
+    application.start().then(() => application.stop().then(done))
+  })*/
+})
+
+// describe('lib/server/server-express => fetch', () => {
+//   let server: ExpressServer
+//   let controller: TestController
 //   let url: string = ''
 
 //   before(() => {
-//     // registerYamlConfig('./config.yml.template')
-//     application = new Application(
-//       container.resolve('ServerFactory'),
-//       container.resolve('Router'),
-//       container.resolve(RouteRegistry),
-//     )
-//     application.registerControllers([container.resolve(TestController)])
+//     registerYamlConfig('./config.yml.template')
+//     registerExpressServer()
+//     controller = resolve(TestController)
+//     server = container.resolve('Server')
+//     server.registerControllers([controller])
+//     server.start()
+
+//     url = `http://localhost:${(resolve('Config') as Config).get('server.port')}`
 //   })
 
-//   it('Application::constructor() will return an object', () => {
-//     expect(application).to.be.an('object')
+//   after(() => {
+//     server.stop()
 //   })
 
-//   it('Application::inject() will return an object', () => {
-//     const injectedApplication = container.resolve(Application)
-//     expect(injectedApplication).to.be.an('object')
+//   it('fetch(/no-args-all) GET', done => {
+//     fetch(`${url}/no-args-all`)
+//       .then(async res => res.text())
+//       .then(body => {
+//         expect(body).to.equal('noArgsAll')
+//         done()
+//       })
 //   })
 
-//   it('Application::registeredRoutes() will return an array', () => {
-//     expect(application.registeredRoutes()).to.be.an('array')
-//     expect(application.registeredRoutes().length).to.equal(
-//       Reflect.getMetadata('routeRegistry', new TestController()).routes.length,
-//     )
+//   it('fetch(/no-args-all) POST', done => {
+//     fetch(`${url}/no-args-all`, {method: 'POST'})
+//       .then(async res => res.text())
+//       .then(body => {
+//         expect(body).to.equal('noArgsAll')
+//         done()
+//       })
 //   })
 
-//   it('Application::start()/stop() will start, then stop the server', done => {
-//     application.start().then(() => application.stop().then(done))
+//   it('fetch(/no-args-post)', done => {
+//     fetch(`${url}/no-args-post`, {method: 'POST'})
+//       .then(async res => res.text())
+//       .then(body => {
+//         expect(body).to.equal('noArgsPost')
+//         done()
+//       })
 //   })
 // })
-
-// // describe('lib/server/server-express => fetch', () => {
-// //   let server: ExpressServer
-// //   let controller: TestController
-// //   let url: string = ''
-
-// //   before(() => {
-// //     registerYamlConfig('./config.yml.template')
-// //     registerExpressServer()
-// //     controller = resolve(TestController)
-// //     server = container.resolve('Server')
-// //     server.registerControllers([controller])
-// //     server.start()
-
-// //     url = `http://localhost:${(resolve('Config') as Config).get('server.port')}`
-// //   })
-
-// //   after(() => {
-// //     server.stop()
-// //   })
-
-// //   it('fetch(/no-args-all) GET', done => {
-// //     fetch(`${url}/no-args-all`)
-// //       .then(async res => res.text())
-// //       .then(body => {
-// //         expect(body).to.equal('noArgsAll')
-// //         done()
-// //       })
-// //   })
-
-// //   it('fetch(/no-args-all) POST', done => {
-// //     fetch(`${url}/no-args-all`, {method: 'POST'})
-// //       .then(async res => res.text())
-// //       .then(body => {
-// //         expect(body).to.equal('noArgsAll')
-// //         done()
-// //       })
-// //   })
-
-// //   it('fetch(/no-args-post)', done => {
-// //     fetch(`${url}/no-args-post`, {method: 'POST'})
-// //       .then(async res => res.text())
-// //       .then(body => {
-// //         expect(body).to.equal('noArgsPost')
-// //         done()
-// //       })
-// //   })
-// // })

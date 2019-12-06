@@ -1,6 +1,9 @@
 import 'reflect-metadata'
+
 import {Inject, Injectable} from '@glasswing/common'
 import {Router, RouterCallable, RouteDescriptor, RouteRegistry} from '@glasswing/router'
+import {container} from 'tsyringe'
+
 import {HttpOrHttpsServer, HttpServerListenError, ServerFactory} from './server-factory'
 
 @Injectable()
@@ -122,3 +125,7 @@ export class Application {
     })
   }
 }
+
+//export const registerApplication = () => container.register('Application', {
+//  useFactory: () => container.resolve(Application)
+//})

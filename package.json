@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/glasswingjs/common#readme",
   "devDependencies": {
+    "@glasswing/controller": "github:glasswingjs/controller#master",
     "@types/chai": "^4.2.3",
     "@types/finalhandler": "^1.1.0",
     "@types/mocha": "^5.2.7",
