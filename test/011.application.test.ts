@@ -1,9 +1,9 @@
 import 'reflect-metadata'
 
+import {resolve} from '@glasswing/common'
 import {registerRouter, RouteRegistry} from '@glasswing/router'
 import {expect} from 'chai'
 // import fetch from 'node-fetch'
-import {container} from 'tsyringe'
 
 import {Application, registerHttpServerFactory} from '../src'
 import {TestController} from './controller'
@@ -13,10 +13,12 @@ registerHttpServerFactory()
 
 describe('lib/application => Application', () => {
   let application: Application
+  let controller: TestController
 
   before(() => {
-    application = container.resolve(Application)
-    application.registerControllers([container.resolve(TestController)])
+    application = resolve(Application)
+    controller = new TestController()
+//    application.registerControllers([resolve(TestController)])
   })
 
   it('Application::constructor() will return an object', () => {

@@ -4,7 +4,6 @@ import {Body,Cookie,Header,Param,Query, RespondWith, RespondWithJson, RespondWit
 import {Get,Post} from '@glasswing/router'
 
 @Controller()
-@Singleton()
 export class TestController {
 
   @Get('/test-get')
