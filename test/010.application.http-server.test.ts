@@ -1,3 +1,4 @@
+/**
 import 'reflect-metadata'
 
 import {expect} from 'chai'
@@ -22,9 +23,10 @@ import {
   registerHttps2ServerFactory,
 } from '../src'
 
+registerRouter()
+
 describe('@glasswing/application', () => {
   describe('src/http-server => *ServerFactory', () => {
-    registerRouter()
     let server: HttpOrHttpsServer
     const router: RouterCallable = container.resolve('Router') as RouterCallable
 
@@ -113,3 +115,4 @@ describe('@glasswing/application', () => {
     })
   })
 })
+/**/

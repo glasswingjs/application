@@ -10,6 +10,7 @@
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "postbuild": "npm run build:dts",
     "prebuild": "cross-env rimraf dist",
+    "prepare-for-dev": "node .scripts/prepare-for-dev.js",
     "pretest": "cross-env rimraf dist",
     "prettier": "prettier",
     "prettier:check": "npm run prettier -- --list-different \"src/**/*.{ts,tsx}\" && npm run prettier -- --list-different \"test/**/*.{ts,tsx}\"",
