@@ -1,11 +1,20 @@
 import {Singleton} from '@glasswing/common'
 import {Controller} from '@glasswing/controller'
-import {Body,Cookie,Header,Param,Query, RespondWith, RespondWithJson, RespondWithRaw, RespondWithYaml} from '@glasswing/http'
-import {Get,Post} from '@glasswing/router'
+import {
+  Body,
+  Cookie,
+  Header,
+  Param,
+  Query,
+  RespondWith,
+  RespondWithJson,
+  RespondWithRaw,
+  RespondWithYaml,
+} from '@glasswing/http'
+import {Get, Post} from '@glasswing/router'
 
 @Controller()
 export class TestController {
-
   @Get('/test-get')
   public testGet() {
     return 'test'
@@ -28,7 +37,6 @@ export class TestController {
   public testGetRespondYaml() {
     return {}
   }
-
 
   @Get('/test-qet-url-var/:id')
   public getGetUrlVar(@Param('id') id: number) {
@@ -54,5 +62,4 @@ export class TestController {
   public testPostBodyVar(@Body('id') id: number) {
     return id
   }
-
 }

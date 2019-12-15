@@ -1,6 +1,7 @@
-import {Request, Response} from '@glasswing/http'
-import {RouterCallable} from '@glasswing/router'
+import {HttpRequest, HttpResponse} from '@glasswing/http'
+import {HttpRouteHandler} from '@glasswing/router'
 import http from 'http'
+import https from 'https'
 import {container} from 'tsyringe'
 
 import {HttpOrHttpsServer, HttpOrHttpsServerOptions} from './_types'
@@ -13,18 +14,22 @@ import {HttpOrHttpsServer, HttpOrHttpsServerOptions} from './_types'
  * @see https://nodejs.org/api/net.html
  */
 export interface ServerFactory {
-  create(router: RouterCallable, options?: HttpOrHttpsServerOptions): HttpOrHttpsServer
+  create(router: HttpRouteHandler, options?: HttpOrHttpsServerOptions, useHttps?: boolean): HttpOrHttpsServer
 }
 
 export class HttpServerFactory {
-  public create(router: RouterCallable, options: http.ServerOptions = {}): HttpOrHttpsServer {
-    return http.createServer(options, (req: Request, res: Response) => {
-      router(req, res)
-    })
+  public create(router: HttpRouteHandler, options: http.ServerOptions = {}, useHttps?: boolean): HttpOrHttpsServer {
+    return useHttps
+      ? https.createServer(options, (req: http.IncomingMessage, res: http.ServerResponse) => {
+          router(HttpRequest.fromIncommingMessage(req), res)
+        })
+      : http.createServer(options, (req: http.IncomingMessage, res: http.ServerResponse) => {
+          router(HttpRequest.fromIncommingMessage(req), res)
+        })
   }
 }
 
 export const registerHttpServerFactory = () =>
   container.register('ServerFactory', {
-    useFactory: () => new HttpServerFactory(),
+    useClass: HttpServerFactory,
   })
