@@ -1,4 +1,3 @@
-import {Singleton} from '@glasswing/common'
 import {Controller} from '@glasswing/controller'
 import {
   Body,
@@ -12,8 +11,9 @@ import {
   RespondWithYaml,
 } from '@glasswing/http'
 import {Get, Post} from '@glasswing/router'
+import {singleton} from 'tsyringe'
 
-@Controller()
+@singleton()
 export class TestController {
   @Get('/test-get')
   public testGet() {

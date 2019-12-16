@@ -36,6 +36,15 @@ function __metadata(metadataKey, metadataValue) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
 }
 
+function __awaiter(thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
 let Application = class Application {
     constructor(
     // @inject('Config') protected config: Config,
@@ -74,33 +83,37 @@ let Application = class Application {
      * @param {string} host
      * @returns {Promise<void>}
      */
-    async start(port = 3000, host) {
-        this.retries = 1;
-        this.port = 3000;
-        this.host = host;
-        // TODO: better way to do this ?
-        // this.server = this.serverFactory.create((this.router as any) as HttpRouteHandler)
-        await this.tryStart();
-        // TODO: Add error for this
-        // @link https://nodejs.org/api/http.html#http_event_clienterror
-        // this.server.on('clientError', (err, socket) => {
-        //   socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
-        // })
+    start(port = 3000, host) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.retries = 1;
+            this.port = 3000;
+            this.host = host;
+            // TODO: better way to do this ?
+            // this.server = this.serverFactory.create((this.router as any) as HttpRouteHandler)
+            yield this.tryStart();
+            // TODO: Add error for this
+            // @link https://nodejs.org/api/http.html#http_event_clienterror
+            // this.server.on('clientError', (err, socket) => {
+            //   socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
+            // })
+        });
     }
     /**
      *
      * @returns {Promise<void>}
      */
-    async stop() {
-        return new Promise((resolve, reject) => {
-            if (!this.server) {
-                throw new Error('There is no server to stop. Please use .start() method first.');
-            }
-            this.server.close((err) => {
-                if (err) {
-                    return reject(err);
+    stop() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                if (!this.server) {
+                    throw new Error('There is no server to stop. Please use .start() method first.');
                 }
-                resolve();
+                this.server.close((err) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve();
+                });
             });
         });
     }
