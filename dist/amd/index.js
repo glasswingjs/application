@@ -1,4 +1,4 @@
-define('index', ['exports', 'reflect-metadata', '@glasswing/common', '@glasswing/router', '@glasswing/http', 'http', 'https', 'tsyringe', 'http2'], function (exports, reflectMetadata, common, router, http, http$1, https, tsyringe, http2) { 'use strict';
+define('index', ['exports', 'reflect-metadata', '@glasswing/router', 'tsyringe', '@glasswing/http', 'http', 'https', 'http2'], function (exports, reflectMetadata, router, tsyringe, http, http$1, https, http2) { 'use strict';
 
     http$1 = http$1 && http$1.hasOwnProperty('default') ? http$1['default'] : http$1;
     https = https && https.hasOwnProperty('default') ? https['default'] : https;
@@ -46,8 +46,8 @@ define('index', ['exports', 'reflect-metadata', '@glasswing/common', '@glasswing
             this.routeRegistry = new router.RouteRegistry();
         }
         Application = __decorate([
-            common.Injectable(),
-            __param(0, common.Inject('ServerFactory')),
+            tsyringe.injectable(),
+            __param(0, tsyringe.inject('ServerFactory')),
             __metadata("design:paramtypes", [Object])
         ], Application);
         return Application;

@@ -1,12 +1,13 @@
-System.register(['reflect-metadata', '@glasswing/common', '@glasswing/router', '@glasswing/http', 'http', 'https', 'tsyringe', 'http2'], function (exports) {
+System.register(['reflect-metadata', '@glasswing/router', 'tsyringe', '@glasswing/http', 'http', 'https', 'http2'], function (exports) {
     'use strict';
-    var Injectable, Inject, RouteRegistry, HttpRequest, Http2Request, http$1, https, container, http2;
+    var RouteRegistry, injectable, inject, container, HttpRequest, Http2Request, http$1, https, http2;
     return {
         setters: [function () {}, function (module) {
-            Injectable = module.Injectable;
-            Inject = module.Inject;
-        }, function (module) {
             RouteRegistry = module.RouteRegistry;
+        }, function (module) {
+            injectable = module.injectable;
+            inject = module.inject;
+            container = module.container;
         }, function (module) {
             HttpRequest = module.HttpRequest;
             Http2Request = module.Http2Request;
@@ -14,8 +15,6 @@ System.register(['reflect-metadata', '@glasswing/common', '@glasswing/router', '
             http$1 = module.default;
         }, function (module) {
             https = module.default;
-        }, function (module) {
-            container = module.container;
         }, function (module) {
             http2 = module.default;
         }],
@@ -63,8 +62,8 @@ System.register(['reflect-metadata', '@glasswing/common', '@glasswing/router', '
                     this.routeRegistry = new RouteRegistry();
                 }
                 Application = __decorate([
-                    Injectable(),
-                    __param(0, Inject('ServerFactory')),
+                    injectable(),
+                    __param(0, inject('ServerFactory')),
                     __metadata("design:paramtypes", [Object])
                 ], Application);
                 return Application;

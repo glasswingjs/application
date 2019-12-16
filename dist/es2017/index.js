@@ -1,10 +1,9 @@
 import 'reflect-metadata';
-import { Injectable, Inject } from '@glasswing/common';
 import { RouteRegistry } from '@glasswing/router';
+import { injectable, inject, container } from 'tsyringe';
 import { HttpRequest, Http2Request } from '@glasswing/http';
 import http from 'http';
 import https from 'https';
-import { container } from 'tsyringe';
 import http2 from 'http2';
 
 /*! *****************************************************************************
@@ -50,8 +49,8 @@ let Application = class Application {
     }
 };
 Application = __decorate([
-    Injectable(),
-    __param(0, Inject('ServerFactory')),
+    injectable(),
+    __param(0, inject('ServerFactory')),
     __metadata("design:paramtypes", [Object])
 ], Application);
 // export const registerApplication = () => container.register('Application', {

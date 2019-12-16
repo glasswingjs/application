@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('reflect-metadata'), require('@glasswing/common'), require('@glasswing/router'), require('@glasswing/http'), require('http'), require('https'), require('tsyringe'), require('http2')) :
-    typeof define === 'function' && define.amd ? define(['exports', 'reflect-metadata', '@glasswing/common', '@glasswing/router', '@glasswing/http', 'http', 'https', 'tsyringe', 'http2'], factory) :
-    (global = global || self, factory((global.gw = global.gw || {}, global.gw.common = {}), null, global.common, global.router, global.http, global.http$1, global.https, global.tsyringe, global.http2));
-}(this, (function (exports, reflectMetadata, common, router, http, http$1, https, tsyringe, http2) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('reflect-metadata'), require('@glasswing/router'), require('tsyringe'), require('@glasswing/http'), require('http'), require('https'), require('http2')) :
+    typeof define === 'function' && define.amd ? define(['exports', 'reflect-metadata', '@glasswing/router', 'tsyringe', '@glasswing/http', 'http', 'https', 'http2'], factory) :
+    (global = global || self, factory((global.gw = global.gw || {}, global.gw.common = {}), null, global.router, global.tsyringe, global.http, global.http$1, global.https, global.http2));
+}(this, (function (exports, reflectMetadata, router, tsyringe, http, http$1, https, http2) { 'use strict';
 
     http$1 = http$1 && http$1.hasOwnProperty('default') ? http$1['default'] : http$1;
     https = https && https.hasOwnProperty('default') ? https['default'] : https;
@@ -50,8 +50,8 @@
             this.routeRegistry = new router.RouteRegistry();
         }
         Application = __decorate([
-            common.Injectable(),
-            __param(0, common.Inject('ServerFactory')),
+            tsyringe.injectable(),
+            __param(0, tsyringe.inject('ServerFactory')),
             __metadata("design:paramtypes", [Object])
         ], Application);
         return Application;

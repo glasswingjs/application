@@ -1,10 +1,9 @@
 import 'reflect-metadata';
-import { Injectable, Inject } from '@glasswing/common';
 import { RouteRegistry } from '@glasswing/router';
+import { injectable, inject, container } from 'tsyringe';
 import { HttpRequest, Http2Request } from '@glasswing/http';
 import http$1 from 'http';
 import https from 'https';
-import { container } from 'tsyringe';
 import http2 from 'http2';
 
 /*! *****************************************************************************
@@ -49,8 +48,8 @@ var Application = /** @class */ (function () {
         this.routeRegistry = new RouteRegistry();
     }
     Application = __decorate([
-        Injectable(),
-        __param(0, Inject('ServerFactory')),
+        injectable(),
+        __param(0, inject('ServerFactory')),
         __metadata("design:paramtypes", [Object])
     ], Application);
     return Application;

@@ -1,8 +1,7 @@
 import 'reflect-metadata'
 
-import {Inject, Injectable} from '@glasswing/common'
 import {HttpRouteDescriptor, HttpRouteHandler, Router, RouteRegistry} from '@glasswing/router'
-import {container} from 'tsyringe'
+import {container, inject, injectable} from 'tsyringe'
 
 import {HttpOrHttpsServer, HttpServerListenError, ServerFactory} from './server-factory'
 
@@ -10,7 +9,7 @@ import {HttpOrHttpsServer, HttpServerListenError, ServerFactory} from './server-
 // @Inject('ServerFactory') protected serverFactory: ServerFactory,
 // @Inject('Router') protected router: Router,
 
-@Injectable()
+@injectable()
 export class Application {
   protected port: number = 3000
   protected host?: string
@@ -19,7 +18,7 @@ export class Application {
   protected server?: HttpOrHttpsServer
   protected routeRegistry: RouteRegistry = new RouteRegistry()
 
-  constructor(@Inject('ServerFactory') protected serverFactory?: ServerFactory) {}
+  constructor(@inject('ServerFactory') protected serverFactory: ServerFactory) {}
 
   // /**
   //  * Register a controller to the application

@@ -5,12 +5,11 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 require('reflect-metadata');
-var common = require('@glasswing/common');
 var router = require('@glasswing/router');
+var tsyringe = require('tsyringe');
 var http = require('@glasswing/http');
 var http$1 = _interopDefault(require('http'));
 var https = _interopDefault(require('https'));
-var tsyringe = require('tsyringe');
 var http2 = _interopDefault(require('http2'));
 
 /*! *****************************************************************************
@@ -55,8 +54,8 @@ var Application = /** @class */ (function () {
         this.routeRegistry = new router.RouteRegistry();
     }
     Application = __decorate([
-        common.Injectable(),
-        __param(0, common.Inject('ServerFactory')),
+        tsyringe.injectable(),
+        __param(0, tsyringe.inject('ServerFactory')),
         __metadata("design:paramtypes", [Object])
     ], Application);
     return Application;
