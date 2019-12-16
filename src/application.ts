@@ -1,10 +1,10 @@
 import 'reflect-metadata'
 
 import {Inject, Injectable} from '@glasswing/common'
-import {Router, HttpRouteHandler, HttpRouteDescriptor, RouteRegistry} from '@glasswing/router'
+import {HttpRouteDescriptor, HttpRouteHandler, Router, RouteRegistry} from '@glasswing/router'
 import {container} from 'tsyringe'
 
-import {HttpOrHttpsServer, HttpServerListenError, ServerFactory, registerHttpServerFactory} from './server-factory'
+import {HttpOrHttpsServer, HttpServerListenError, ServerFactory} from './server-factory'
 
 // @Inject('Config') protected config: Config
 // @Inject('ServerFactory') protected serverFactory: ServerFactory,
@@ -27,7 +27,8 @@ export class Application {
   //  */
   // public registerController(controller: any): void {
   //   // for now it's enough to store the routes; we'll see what future reserves
-  //   // getControllerPathMappings(controller).routes.forEach((route: Route) => this.routeRegistry.registerRoute(route))
+  //   // getControllerPathMappings(controller).routes.forEach((route: Route) =>
+  // this.routeRegistry.registerRoute(route))
   // }
 
   // /**
@@ -56,7 +57,8 @@ export class Application {
   //   this.port = 3000
   //   this.host = host
 
-  //   // this.server = this.serverFactory.create((this.router as any) as HttpRouteHandler) // TODO: better way to do this ?
+  //   // this.server = this.serverFactory.create((this.router as any) as HttpRouteHandler)
+  // // TODO: better way to do this ?
 
   //   await this.tryStart()
 
@@ -107,7 +109,8 @@ export class Application {
   //         reject(err)
   //       } else {
   //         // TODO: Add fail log
-  //         console.log(`Server failed starting on port: ${this.port}. Port is busy.`) // tslint:disable-line no-console
+  //         console.log(`Server failed starting on port: ${this.port}. Port is busy.`)
+  // // tslint:disable-line no-console
   //         if (this.retries++ < this.retriesMax) {
   //           // TODO: Add retry log
   //           this.port += 1
@@ -126,6 +129,6 @@ export class Application {
   // }
 }
 
-//export const registerApplication = () => container.register('Application', {
-//  useFactory: () => container.resolve(Application)
-//})
+// export const registerApplication = () => container.register('Application', {
+//   useFactory: () => container.resolve(Application)
+// })

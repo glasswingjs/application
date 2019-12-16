@@ -1,12 +1,17 @@
 import {Http2Request, Http2Response} from '@glasswing/http'
 import {HttpRouteHandler} from '@glasswing/router'
 import http2 from 'http2'
+import {container} from 'tsyringe'
 
-import {HttpOrHttpsServer, HttpOrHttpsServerOptions} from './_types'
+import {HttpOrHttpsServer} from './_types'
 import {ServerFactory} from './http'
 
-export class HttpServerFactory {
-  public create(router: HttpRouteHandler, options: http2.ServerOptions = {}, useHttps?: boolean): HttpOrHttpsServer {
+export class Http2ServerFactory implements ServerFactory {
+  public create(
+    router: HttpRouteHandler,
+    options: http2.ServerOptions | http2.SecureServerOptions = {},
+    useHttps?: boolean,
+  ): HttpOrHttpsServer {
     return useHttps
       ? http2.createSecureServer(options, (req: http2.Http2ServerRequest, res: http2.Http2ServerResponse) => {
           router(Http2Request.fromIncommingMessage(req), res)
@@ -17,7 +22,7 @@ export class HttpServerFactory {
   }
 }
 
-export const registerHttpServerFactory = () =>
+export const registerHttp2ServerFactory = () =>
   container.register('ServerFactory', {
-    useClass: HttpServerFactory,
+    useClass: Http2ServerFactory,
   })

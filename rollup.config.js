@@ -1,3 +1,5 @@
+import dts from 'rollup-plugin-dts';
+
 import typescript from "rollup-plugin-typescript2";
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -36,6 +38,10 @@ export default [{
     },
   ],
   plugins: [ ts(), ],
+}, {
+  input: "./src/index.ts",
+  output: [{ file: "dist/index.d.ts", format: "es" }],
+  plugins: [dts()],
 }].concat(!isProduction
   ? []
   : [

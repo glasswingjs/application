@@ -17,8 +17,12 @@ export interface ServerFactory {
   create(router: HttpRouteHandler, options?: HttpOrHttpsServerOptions, useHttps?: boolean): HttpOrHttpsServer
 }
 
-export class HttpServerFactory {
-  public create(router: HttpRouteHandler, options: http.ServerOptions = {}, useHttps?: boolean): HttpOrHttpsServer {
+export class HttpServerFactory implements ServerFactory {
+  public create(
+    router: HttpRouteHandler,
+    options: http.ServerOptions | https.ServerOptions = {},
+    useHttps?: boolean,
+  ): HttpOrHttpsServer {
     return useHttps
       ? https.createServer(options, (req: http.IncomingMessage, res: http.ServerResponse) => {
           router(HttpRequest.fromIncommingMessage(req), res)

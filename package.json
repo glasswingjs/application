@@ -5,10 +5,8 @@
   "main": "dist/commonjs/index.js",
   "scripts": {
     "build": "rollup -c --environment NODE_ENV:production",
-    "build:dts": "dts-bundle-generator ./src/index.ts -o dist/index.d.ts --no-check && node .scripts/fix-ts-definitions.js",
     "clean": "cross-env rimraf .nyc_output .rollupcache dist",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "postbuild": "npm run build:dts",
     "prebuild": "cross-env rimraf dist",
     "prepare-for-dev": "node .scripts/prepare-for-dev.js",
     "pretest": "cross-env rimraf dist",
@@ -54,6 +52,7 @@
     "release-it": "^12.4.3",
     "rimraf": "^3.0.0",
     "rollup": "^1.27.13",
+    "rollup-plugin-dts": "^1.1.13",
     "rollup-plugin-typescript2": "^0.25.3",
     "ts-node": "^8.5.4",
     "tslint": "^5.20.1",
@@ -64,10 +63,10 @@
   },
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@glasswing/controller": "glasswingjs/controller#157b666",
+    "@glasswing/controller": "glasswingjs/controller#2e40514",
     "@glasswing/common": "glasswingjs/common#7d58794",
-    "@glasswing/http": "glasswingjs/http#4c62400",
-    "@glasswing/router": "glasswingjs/router#ba98fed",
+    "@glasswing/http": "glasswingjs/http#5d448cc",
+    "@glasswing/router": "glasswingjs/router#75b9cd6",
     "tsyringe": "^4.0.1"
   },
   "gitHooks": {
