@@ -64,10 +64,10 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "@glasswing/config": "glasswingjs/config#458fa90",
-    "@glasswing/controller": "glasswingjs/controller#2e40514",
-    "@glasswing/common": "glasswingjs/common#7d58794",
-    "@glasswing/http": "glasswingjs/http#5d448cc",
-    "@glasswing/router": "glasswingjs/router#75b9cd6",
+    "@glasswing/controller": "glasswingjs/controller#29210b3",
+    "@glasswing/common": "glasswingjs/common#049895d",
+    "@glasswing/http": "glasswingjs/http#209f34f",
+    "@glasswing/router": "glasswingjs/router#c1ba67f",
     "tsyringe": "^4.0.1"
   },
   "gitHooks": {
