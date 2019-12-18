@@ -64,7 +64,7 @@
          */
         registerController(controller) {
             // for now it's enough to store the routes; we'll see what future reserves
-            // getControllerPathMappings(controller).routes.forEach((route: Route) => this.routeRegistry.registerRoute(route))
+            router.getControllerPathMappings(controller).routes.forEach((route) => this.routeRegistry.registerRoute(route));
         }
         /**
          * Register a set of controllers to the application
@@ -90,8 +90,7 @@
                 this.retries = 1;
                 this.port = 3000;
                 this.host = host;
-                // TODO: better way to do this ?
-                // this.server = this.serverFactory.create((this.router as any) as HttpRouteHandler)
+                this.server = this.serverFactory.create(this.router); // TODO: better way to do this ?
                 yield this.tryStart();
                 // TODO: Add error for this
                 // @link https://nodejs.org/api/http.html#http_event_clienterror
@@ -166,9 +165,11 @@
         __param(1, tsyringe.inject('Router')),
         __metadata("design:paramtypes", [Object, Object])
     ], exports.Application);
-    // export const registerApplication = () => container.register('Application', {
-    //   useFactory: () => container.resolve(Application)
-    // })
+    const registerApplication = (c) => {
+        tsyringe.container.register('Application', {
+            useFactory: () => tsyringe.container.resolve(exports.Application),
+        });
+    };
 
     class HttpServerFactory {
         create(router, options = {}, useHttps) {
@@ -181,9 +182,12 @@
                 });
         }
     }
-    const registerHttpServerFactory = () => tsyringe.container.register('ServerFactory', {
-        useClass: HttpServerFactory,
-    });
+    const registerHttpServerFactory = (c) => {
+        c = c || tsyringe.container;
+        c.register('ServerFactory', {
+            useClass: HttpServerFactory,
+        });
+    };
 
     class Http2ServerFactory {
         create(router, options = {}, useHttps) {
@@ -196,12 +200,16 @@
                 });
         }
     }
-    const registerHttp2ServerFactory = () => tsyringe.container.register('ServerFactory', {
-        useClass: Http2ServerFactory,
-    });
+    const registerHttp2ServerFactory = (c) => {
+        c = c || tsyringe.container;
+        c.register('ServerFactory', {
+            useClass: Http2ServerFactory,
+        });
+    };
 
     exports.Http2ServerFactory = Http2ServerFactory;
     exports.HttpServerFactory = HttpServerFactory;
+    exports.registerApplication = registerApplication;
     exports.registerHttp2ServerFactory = registerHttp2ServerFactory;
     exports.registerHttpServerFactory = registerHttpServerFactory;
 

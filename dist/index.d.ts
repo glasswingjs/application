@@ -1,9 +1,9 @@
 /// <reference types="node" />
 import { HttpRouteHandler, HttpRouter, RouteRegistry, HttpRouteDescriptor } from '@glasswing/router';
+import { DependencyContainer } from 'tsyringe';
 import http, { ServerOptions, Server } from 'http';
 import http2, { ServerOptions as ServerOptions$2, SecureServerOptions, Http2Server, Http2SecureServer } from 'http2';
 import https, { ServerOptions as ServerOptions$1, Server as Server$1 } from 'https';
-import { DependencyContainer } from 'tsyringe';
 
 declare type HttpOrHttpsServerOptions = ServerOptions | ServerOptions$1 | ServerOptions$2 | SecureServerOptions;
 declare type HttpOrHttpsServer = Server | Server$1 | Http2Server | Http2SecureServer;
@@ -24,12 +24,12 @@ interface ServerFactory {
 declare class HttpServerFactory implements ServerFactory {
     create(router: HttpRouteHandler, options?: http.ServerOptions | https.ServerOptions, useHttps?: boolean): HttpOrHttpsServer;
 }
-declare const registerHttpServerFactory: () => DependencyContainer;
+declare const registerHttpServerFactory: (c?: DependencyContainer | undefined) => void;
 
 declare class Http2ServerFactory implements ServerFactory {
     create(router: HttpRouteHandler, options?: http2.ServerOptions | http2.SecureServerOptions, useHttps?: boolean): HttpOrHttpsServer;
 }
-declare const registerHttp2ServerFactory: () => DependencyContainer;
+declare const registerHttp2ServerFactory: (c?: DependencyContainer | undefined) => void;
 
 declare class Application {
     protected serverFactory: ServerFactory;
@@ -73,5 +73,6 @@ declare class Application {
      */
     protected tryStart(): Promise<void>;
 }
+declare const registerApplication: (c?: DependencyContainer | undefined) => void;
 
-export { Application, Http2ServerFactory, HttpOrHttpsServer, HttpOrHttpsServerOptions, HttpServerFactory, HttpServerListenError, ServerFactory, registerHttp2ServerFactory, registerHttpServerFactory };
+export { Application, Http2ServerFactory, HttpOrHttpsServer, HttpOrHttpsServerOptions, HttpServerFactory, HttpServerListenError, ServerFactory, registerApplication, registerHttp2ServerFactory, registerHttpServerFactory };

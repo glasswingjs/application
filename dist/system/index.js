@@ -1,8 +1,9 @@
 System.register(['reflect-metadata', '@glasswing/router', 'tsyringe', '@glasswing/http', 'http', 'https', 'http2'], function (exports) {
     'use strict';
-    var RouteRegistry, injectable, inject, container, HttpRequest, Http2Request, http$1, https, http2;
+    var getControllerPathMappings, RouteRegistry, injectable, inject, container, HttpRequest, Http2Request, http$1, https, http2;
     return {
         setters: [function () {}, function (module) {
+            getControllerPathMappings = module.getControllerPathMappings;
             RouteRegistry = module.RouteRegistry;
         }, function (module) {
             injectable = module.injectable;
@@ -103,8 +104,11 @@ System.register(['reflect-metadata', '@glasswing/router', 'tsyringe', '@glasswin
                  * @param controller
                  */
                 Application.prototype.registerController = function (controller) {
+                    var _this = this;
                     // for now it's enough to store the routes; we'll see what future reserves
-                    // getControllerPathMappings(controller).routes.forEach((route: Route) => this.routeRegistry.registerRoute(route))
+                    getControllerPathMappings(controller).routes.forEach(function (route) {
+                        return _this.routeRegistry.registerRoute(route);
+                    });
                 };
                 /**
                  * Register a set of controllers to the application
@@ -134,8 +138,7 @@ System.register(['reflect-metadata', '@glasswing/router', 'tsyringe', '@glasswin
                                     this.retries = 1;
                                     this.port = 3000;
                                     this.host = host;
-                                    // TODO: better way to do this ?
-                                    // this.server = this.serverFactory.create((this.router as any) as HttpRouteHandler)
+                                    this.server = this.serverFactory.create(this.router); // TODO: better way to do this ?
                                     return [4 /*yield*/, this.tryStart()
                                         // TODO: Add error for this
                                         // @link https://nodejs.org/api/http.html#http_event_clienterror
@@ -144,8 +147,6 @@ System.register(['reflect-metadata', '@glasswing/router', 'tsyringe', '@glasswin
                                         // })
                                     ];
                                 case 1:
-                                    // TODO: better way to do this ?
-                                    // this.server = this.serverFactory.create((this.router as any) as HttpRouteHandler)
                                     _a.sent();
                                     return [2 /*return*/];
                             }
@@ -223,9 +224,11 @@ System.register(['reflect-metadata', '@glasswing/router', 'tsyringe', '@glasswin
                 ], Application);
                 return Application;
             }()));
-            // export const registerApplication = () => container.register('Application', {
-            //   useFactory: () => container.resolve(Application)
-            // })
+            var registerApplication = exports('registerApplication', function (c) {
+                container.register('Application', {
+                    useFactory: function () { return container.resolve(Application); },
+                });
+            });
 
             var HttpServerFactory = exports('HttpServerFactory', /** @class */ (function () {
                 function HttpServerFactory() {
@@ -242,8 +245,9 @@ System.register(['reflect-metadata', '@glasswing/router', 'tsyringe', '@glasswin
                 };
                 return HttpServerFactory;
             }()));
-            var registerHttpServerFactory = exports('registerHttpServerFactory', function () {
-                return container.register('ServerFactory', {
+            var registerHttpServerFactory = exports('registerHttpServerFactory', function (c) {
+                c = c || container;
+                c.register('ServerFactory', {
                     useClass: HttpServerFactory,
                 });
             });
@@ -263,8 +267,9 @@ System.register(['reflect-metadata', '@glasswing/router', 'tsyringe', '@glasswin
                 };
                 return Http2ServerFactory;
             }()));
-            var registerHttp2ServerFactory = exports('registerHttp2ServerFactory', function () {
-                return container.register('ServerFactory', {
+            var registerHttp2ServerFactory = exports('registerHttp2ServerFactory', function (c) {
+                c = c || container;
+                c.register('ServerFactory', {
                     useClass: Http2ServerFactory,
                 });
             });

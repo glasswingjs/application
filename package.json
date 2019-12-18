@@ -63,6 +63,7 @@
   },
   "types": "dist/index.d.ts",
   "dependencies": {
+    "@glasswing/config": "glasswingjs/config#458fa90",
     "@glasswing/controller": "glasswingjs/controller#2e40514",
     "@glasswing/common": "glasswingjs/common#7d58794",
     "@glasswing/http": "glasswingjs/http#5d448cc",

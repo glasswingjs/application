@@ -1,7 +1,7 @@
 import {Http2Request, Http2Response} from '@glasswing/http'
 import {HttpRouteHandler} from '@glasswing/router'
 import http2 from 'http2'
-import {container} from 'tsyringe'
+import {container, DependencyContainer} from 'tsyringe'
 
 import {HttpOrHttpsServer} from './_types'
 import {ServerFactory} from './http'
@@ -22,7 +22,9 @@ export class Http2ServerFactory implements ServerFactory {
   }
 }
 
-export const registerHttp2ServerFactory = () =>
-  container.register('ServerFactory', {
+export const registerHttp2ServerFactory = (c?: DependencyContainer): void => {
+  c = c || container
+  c.register('ServerFactory', {
     useClass: Http2ServerFactory,
   })
+}

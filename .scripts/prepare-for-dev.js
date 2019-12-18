@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const rimraf = require('rimraf')
 
-const packages = [ 'common', 'controller', 'http', 'router' ]
+const packages = [ 'common', 'config', 'controller', 'http', 'router' ]
 
 console.log('Creating symlinks ...')
 

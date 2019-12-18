@@ -1,7 +1,13 @@
 import 'reflect-metadata'
 
-import {HttpRouteDescriptor, HttpRouteHandler, HttpRouter, RouteRegistry} from '@glasswing/router'
-import {inject, injectable} from 'tsyringe'
+import {
+  getControllerPathMappings,
+  HttpRouteDescriptor,
+  HttpRouteHandler,
+  HttpRouter,
+  RouteRegistry,
+} from '@glasswing/router'
+import {container, DependencyContainer, inject, injectable} from 'tsyringe'
 
 import {HttpOrHttpsServer, HttpServerListenError, ServerFactory} from './server-factory'
 
@@ -26,7 +32,9 @@ export class Application {
    */
   public registerController(controller: any): void {
     // for now it's enough to store the routes; we'll see what future reserves
-    // getControllerPathMappings(controller).routes.forEach((route: Route) => this.routeRegistry.registerRoute(route))
+    getControllerPathMappings(controller).routes.forEach((route: HttpRouteDescriptor) =>
+      this.routeRegistry.registerRoute(route),
+    )
   }
 
   /**
@@ -55,8 +63,7 @@ export class Application {
     this.port = 3000
     this.host = host
 
-    // TODO: better way to do this ?
-    // this.server = this.serverFactory.create((this.router as any) as HttpRouteHandler)
+    this.server = this.serverFactory.create((this.router as any) as HttpRouteHandler) // TODO: better way to do this ?
 
     await this.tryStart()
 
@@ -126,6 +133,8 @@ export class Application {
   }
 }
 
-// export const registerApplication = () => container.register('Application', {
-//   useFactory: () => container.resolve(Application)
-// })
+export const registerApplication = (c?: DependencyContainer): void => {
+  container.register('Application', {
+    useFactory: () => container.resolve(Application),
+  })
+}

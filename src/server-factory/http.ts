@@ -2,7 +2,7 @@ import {HttpRequest, HttpResponse} from '@glasswing/http'
 import {HttpRouteHandler} from '@glasswing/router'
 import http from 'http'
 import https from 'https'
-import {container} from 'tsyringe'
+import {container, DependencyContainer} from 'tsyringe'
 
 import {HttpOrHttpsServer, HttpOrHttpsServerOptions} from './_types'
 
@@ -33,7 +33,9 @@ export class HttpServerFactory implements ServerFactory {
   }
 }
 
-export const registerHttpServerFactory = () =>
-  container.register('ServerFactory', {
+export const registerHttpServerFactory = (c?: DependencyContainer): void => {
+  c = c || container
+  c.register('ServerFactory', {
     useClass: HttpServerFactory,
   })
+}

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { RouteRegistry } from '@glasswing/router';
+import { RouteRegistry, getControllerPathMappings } from '@glasswing/router';
 import { injectable, inject, container } from 'tsyringe';
 import { HttpRequest, Http2Request } from '@glasswing/http';
 import http from 'http';
@@ -53,7 +53,7 @@ let Application = class Application {
      */
     registerController(controller) {
         // for now it's enough to store the routes; we'll see what future reserves
-        // getControllerPathMappings(controller).routes.forEach((route: Route) => this.routeRegistry.registerRoute(route))
+        getControllerPathMappings(controller).routes.forEach((route) => this.routeRegistry.registerRoute(route));
     }
     /**
      * Register a set of controllers to the application
@@ -78,8 +78,7 @@ let Application = class Application {
         this.retries = 1;
         this.port = 3000;
         this.host = host;
-        // TODO: better way to do this ?
-        // this.server = this.serverFactory.create((this.router as any) as HttpRouteHandler)
+        this.server = this.serverFactory.create(this.router); // TODO: better way to do this ?
         await this.tryStart();
         // TODO: Add error for this
         // @link https://nodejs.org/api/http.html#http_event_clienterror
@@ -151,9 +150,11 @@ Application = __decorate([
     __param(1, inject('Router')),
     __metadata("design:paramtypes", [Object, Object])
 ], Application);
-// export const registerApplication = () => container.register('Application', {
-//   useFactory: () => container.resolve(Application)
-// })
+const registerApplication = (c) => {
+    container.register('Application', {
+        useFactory: () => container.resolve(Application),
+    });
+};
 
 class HttpServerFactory {
     create(router, options = {}, useHttps) {
@@ -166,9 +167,12 @@ class HttpServerFactory {
             });
     }
 }
-const registerHttpServerFactory = () => container.register('ServerFactory', {
-    useClass: HttpServerFactory,
-});
+const registerHttpServerFactory = (c) => {
+    c = c || container;
+    c.register('ServerFactory', {
+        useClass: HttpServerFactory,
+    });
+};
 
 class Http2ServerFactory {
     create(router, options = {}, useHttps) {
@@ -181,8 +185,11 @@ class Http2ServerFactory {
             });
     }
 }
-const registerHttp2ServerFactory = () => container.register('ServerFactory', {
-    useClass: Http2ServerFactory,
-});
+const registerHttp2ServerFactory = (c) => {
+    c = c || container;
+    c.register('ServerFactory', {
+        useClass: Http2ServerFactory,
+    });
+};
 
-export { Application, Http2ServerFactory, HttpServerFactory, registerHttp2ServerFactory, registerHttpServerFactory };
+export { Application, Http2ServerFactory, HttpServerFactory, registerApplication, registerHttp2ServerFactory, registerHttpServerFactory };
