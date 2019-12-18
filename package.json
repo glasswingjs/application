@@ -63,11 +63,11 @@
   },
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@glasswing/config": "glasswingjs/config#458fa90",
-    "@glasswing/controller": "glasswingjs/controller#29210b3",
-    "@glasswing/common": "glasswingjs/common#049895d",
-    "@glasswing/http": "glasswingjs/http#209f34f",
-    "@glasswing/router": "glasswingjs/router#c1ba67f",
+    "@glasswing/config": "glasswingjs/config#9540c35",
+    "@glasswing/controller": "glasswingjs/controller#3b24232",
+    "@glasswing/common": "glasswingjs/common#5bb3ee9",
+    "@glasswing/http": "glasswingjs/http#bf41f4e",
+    "@glasswing/router": "glasswingjs/router#2a013ce",
     "tsyringe": "^4.0.1"
   },
   "gitHooks": {
