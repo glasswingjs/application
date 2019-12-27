@@ -12,12 +12,17 @@ import {TestController} from './controller'
 describe('@glasswing/application', () => {
   describe('Application (initiatlization)', () => {
     before(() => {
+      registerYamlConfig('./test/config.yaml', container)
       registerRouter(container)
       registerHttpServerFactory(container)
     })
 
     after(() => {
       container.reset()
+    })
+
+    it('.. YamlConfig::inject() => Should return an object', () => {
+      expect(container.resolve('Config')).to.be.an('object')
     })
 
     it('.. ServerFactory::inject() => Should return an object', () => {
@@ -29,7 +34,11 @@ describe('@glasswing/application', () => {
     })
 
     it('::constructor() => Should return an object', () => {
-      const app: Application = new Application(container.resolve('ServerFactory'), container.resolve('Router'))
+      const app: Application = new Application(
+        container.resolve('Config'),
+        container.resolve('ServerFactory'),
+        container.resolve('Router'),
+      )
       expect(app).to.be.an('object')
       expect(app instanceof Application).to.be.true
     })
@@ -47,6 +56,7 @@ describe('@glasswing/application', () => {
     let controller: TestController
 
     before(() => {
+      registerYamlConfig('./test/config.yaml', container)
       registerRouter(container)
       registerHttpServerFactory(container)
       application = container.resolve(Application)
@@ -70,50 +80,49 @@ describe('@glasswing/application', () => {
   })
 
   // describe('lib/server/server-express => fetch', () => {
-  //   let server: ExpressServer
+  //   let application: Application
   //   let controller: TestController
   //   let url: string = ''
 
   //   before(() => {
-  //     registerYamlConfig('./config.yml.template')
-  //     registerExpressServer()
-  //     controller = resolve(TestController)
-  //     server = container.resolve('Server')
-  //     server.registerControllers([controller])
-  //     server.start()
+  //     registerRouter(container)
+  //     registerHttpServerFactory(container)
+  //     application = container.resolve(Application)
+  //     application.registerControllers([container.resolve(TestController)])
+  //     application.start()
 
-  //     url = `http://localhost:${(resolve('Config') as Config).get('server.port')}`
+  //     // url = `http://localhost:${(resolve('Config') as Config).get('server.port')}`
   //   })
 
   //   after(() => {
-  //     server.stop()
+  //     application.stop()
   //   })
 
-  //   it('fetch(/no-args-all) GET', done => {
-  //     fetch(`${url}/no-args-all`)
-  //       .then(async res => res.text())
-  //       .then(body => {
-  //         expect(body).to.equal('noArgsAll')
-  //         done()
-  //       })
-  //   })
+  //   // it('fetch(/no-args-all) GET', done => {
+  //   //   fetch(`${url}/no-args-all`)
+  //   //     .then(async res => res.text())
+  //   //     .then(body => {
+  //   //       expect(body).to.equal('noArgsAll')
+  //   //       done()
+  //   //     })
+  //   // })
 
-  //   it('fetch(/no-args-all) POST', done => {
-  //     fetch(`${url}/no-args-all`, {method: 'POST'})
-  //       .then(async res => res.text())
-  //       .then(body => {
-  //         expect(body).to.equal('noArgsAll')
-  //         done()
-  //       })
-  //   })
+  // //   it('fetch(/no-args-all) POST', done => {
+  // //     fetch(`${url}/no-args-all`, {method: 'POST'})
+  // //       .then(async res => res.text())
+  // //       .then(body => {
+  // //         expect(body).to.equal('noArgsAll')
+  // //         done()
+  // //       })
+  // //   })
 
-  //   it('fetch(/no-args-post)', done => {
-  //     fetch(`${url}/no-args-post`, {method: 'POST'})
-  //       .then(async res => res.text())
-  //       .then(body => {
-  //         expect(body).to.equal('noArgsPost')
-  //         done()
-  //       })
-  //   })
+  // //   it('fetch(/no-args-post)', done => {
+  // //     fetch(`${url}/no-args-post`, {method: 'POST'})
+  // //       .then(async res => res.text())
+  // //       .then(body => {
+  // //         expect(body).to.equal('noArgsPost')
+  // //         done()
+  // //       })
+  // //   })
   // })
 })

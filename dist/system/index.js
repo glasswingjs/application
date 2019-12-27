@@ -89,9 +89,8 @@ System.register(['reflect-metadata', '@glasswing/router', 'tsyringe', '@glasswin
             }
 
             var Application = exports('Application', /** @class */ (function () {
-                function Application(
-                // @inject('Config') protected config: Config,
-                serverFactory, router) {
+                function Application(config, serverFactory, router) {
+                    this.config = config;
                     this.serverFactory = serverFactory;
                     this.router = router;
                     this.port = 3000;
@@ -218,9 +217,10 @@ System.register(['reflect-metadata', '@glasswing/router', 'tsyringe', '@glasswin
                 };
                 Application = __decorate([
                     injectable(),
-                    __param(0, inject('ServerFactory')),
-                    __param(1, inject('Router')),
-                    __metadata("design:paramtypes", [Object, Object])
+                    __param(0, inject('Config')),
+                    __param(1, inject('ServerFactory')),
+                    __param(2, inject('Router')),
+                    __metadata("design:paramtypes", [Object, Object, Object])
                 ], Application);
                 return Application;
             }()));

@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import { Config } from '@glasswing/config';
 import { HttpRouteHandler, HttpRouter, RouteRegistry, HttpRouteDescriptor } from '@glasswing/router';
 import { DependencyContainer } from 'tsyringe';
 import http, { ServerOptions, Server } from 'http';
@@ -32,6 +33,7 @@ declare class Http2ServerFactory implements ServerFactory {
 declare const registerHttp2ServerFactory: (c?: DependencyContainer | undefined) => void;
 
 declare class Application {
+    protected config: Config;
     protected serverFactory: ServerFactory;
     protected router: HttpRouter;
     protected port: number;
@@ -40,7 +42,7 @@ declare class Application {
     protected retriesMax: number;
     protected server?: HttpOrHttpsServer;
     protected routeRegistry: RouteRegistry;
-    constructor(serverFactory: ServerFactory, router: HttpRouter);
+    constructor(config: Config, serverFactory: ServerFactory, router: HttpRouter);
     /**
      * Register a controller to the application
      * @param controller

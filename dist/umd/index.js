@@ -76,9 +76,8 @@
     }
 
     var Application = /** @class */ (function () {
-        function Application(
-        // @inject('Config') protected config: Config,
-        serverFactory, router$1) {
+        function Application(config, serverFactory, router$1) {
+            this.config = config;
             this.serverFactory = serverFactory;
             this.router = router$1;
             this.port = 3000;
@@ -205,9 +204,10 @@
         };
         Application = __decorate([
             tsyringe.injectable(),
-            __param(0, tsyringe.inject('ServerFactory')),
-            __param(1, tsyringe.inject('Router')),
-            __metadata("design:paramtypes", [Object, Object])
+            __param(0, tsyringe.inject('Config')),
+            __param(1, tsyringe.inject('ServerFactory')),
+            __param(2, tsyringe.inject('Router')),
+            __metadata("design:paramtypes", [Object, Object, Object])
         ], Application);
         return Application;
     }());

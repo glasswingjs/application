@@ -1,5 +1,7 @@
 import 'reflect-metadata'
 
+import {Config} from '@glasswing/config'
+
 import {
   getControllerPathMappings,
   HttpRouteDescriptor,
@@ -21,7 +23,7 @@ export class Application {
   protected routeRegistry: RouteRegistry = new RouteRegistry()
 
   constructor(
-    // @inject('Config') protected config: Config,
+    @inject('Config') protected config: Config,
     @inject('ServerFactory') protected serverFactory: ServerFactory,
     @inject('Router') protected router: HttpRouter,
   ) {}

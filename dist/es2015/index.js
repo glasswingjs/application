@@ -46,9 +46,8 @@ function __awaiter(thisArg, _arguments, P, generator) {
 }
 
 let Application = class Application {
-    constructor(
-    // @inject('Config') protected config: Config,
-    serverFactory, router) {
+    constructor(config, serverFactory, router) {
+        this.config = config;
         this.serverFactory = serverFactory;
         this.router = router;
         this.port = 3000;
@@ -159,9 +158,10 @@ let Application = class Application {
 };
 Application = __decorate([
     injectable(),
-    __param(0, inject('ServerFactory')),
-    __param(1, inject('Router')),
-    __metadata("design:paramtypes", [Object, Object])
+    __param(0, inject('Config')),
+    __param(1, inject('ServerFactory')),
+    __param(2, inject('Router')),
+    __metadata("design:paramtypes", [Object, Object, Object])
 ], Application);
 const registerApplication = (c) => {
     container.register('Application', {
